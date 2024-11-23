@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bad News Tracker</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .good-news { color: green; }
+        .bad-news { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Bad News Tracker</h1>
+    <p>Last scan time: {{ last_scan_time }}</p>
+    <p>API usage count: {{ usage_count }}</p>
+
+    <h2>Bad News Results</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Vendor</th>
+                <th>Results</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vendor, results in bad_news.items() %}
+                <tr class="{{ 'good-news' if results == 'No results found.' else 'bad-news' }}">
+                    <td>{{ vendor }}</td>
+                    <td>
+                        {% if results == 'No results found.' %}
+                            No bad news about vendor
+                        {% else %}
+                            <ul>
+                                {% for result in results %}
+                                    <li>{{ result }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
